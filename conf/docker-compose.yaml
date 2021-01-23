@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+
+  app-fast-api-clear-arch:
+    container_name: app-fast-api-clear-arch
+    image: app-fast-api-clear-arch
+    env_file: .env
+    build:
+      context: ../
+      dockerfile: conf/Dockerfile
+    volumes:
+      - ../app:/app
+    ports:
+      - "8099:80"
