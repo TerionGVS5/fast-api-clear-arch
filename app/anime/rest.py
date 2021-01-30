@@ -2,7 +2,8 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 
-from .adapters import MemoryStorage
+from app.database import SessionLocal
+from .adapters import SQLStorage
 from .services import AnimeListUseCase, Anime
 
 router = APIRouter(
@@ -11,8 +12,17 @@ router = APIRouter(
 )
 
 
-def get_use_case() -> AnimeListUseCase:
-    return AnimeListUseCase(MemoryStorage())
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+def get_use_case(db = Depends(get_db)) -> AnimeListUseCase:
+    return AnimeListUseCase(SQLStorage(db))
 
 
 @router.get("/", response_model=List[Anime])

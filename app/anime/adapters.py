@@ -1,7 +1,9 @@
 from typing import List
 
-from .services import AnimeStorage, Anime
+from sqlalchemy.orm import Session
 
+from .services import AnimeStorage, Anime
+from . import models
 
 class MemoryStorage(AnimeStorage):
 
@@ -12,3 +14,12 @@ class MemoryStorage(AnimeStorage):
 
     def get_anime(self) -> List[Anime]:
         return self._storage
+
+
+class SQLStorage(AnimeStorage):
+
+    def __init__(self, db: Session):
+        self.db = db
+
+    def get_anime(self) -> List[Anime]:
+        return self.db.query(models.Anime).all()

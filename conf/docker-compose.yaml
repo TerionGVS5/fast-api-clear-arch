@@ -1,6 +1,15 @@
 version: '3.7'
 services:
 
+  db-fast-api-clear-arch:
+    container_name: db-fast-api-clear-arch
+    image: postgres:11
+    env_file: .env
+    volumes:
+      - db-fast-api-clear-arch:/var/lib/postgresql/data:rw
+    ports:
+      - "5436:5432"
+
   app-fast-api-clear-arch:
     container_name: app-fast-api-clear-arch
     image: app-fast-api-clear-arch
@@ -9,6 +18,13 @@ services:
       context: ../
       dockerfile: conf/Dockerfile
     volumes:
-      - ../app:/app
+      - ../app:/app/app
     ports:
       - "8099:80"
+    depends_on:
+      - db-fast-api-clear-arch
+    entrypoint: '/start-reload.sh'
+
+volumes:
+  db-fast-api-clear-arch:
+    external: true
