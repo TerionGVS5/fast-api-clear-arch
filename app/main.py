@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 
 from app.anime.rest import router as anime_router
@@ -9,4 +10,8 @@ app.include_router(anime_router)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello Bigger Applications! Updated"}
+    return {"message": "Hello Bigger Applications!"}
+
+
+if __name__ == "__main__":
+    uvicorn.run('app.main:app', host="0.0.0.0", port=80, reload=True)

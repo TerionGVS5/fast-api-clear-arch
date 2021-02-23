@@ -23,7 +23,7 @@ services:
       - "8099:80"
     depends_on:
       - db-fast-api-clear-arch
-    entrypoint: '/start-reload.sh'
+#    entrypoint: '/start-reload.sh'
 
 volumes:
   db-fast-api-clear-arch:

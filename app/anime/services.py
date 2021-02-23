@@ -8,7 +8,7 @@ class Anime(BaseModel):
 
 
 class AnimeStorage:
-    def get_anime(self) -> List[Anime]: ...
+    def get_anime_list(self) -> List[Anime]: ...
 
 
 class AnimeListUseCase:
@@ -16,5 +16,4 @@ class AnimeListUseCase:
         self.repo = repo
 
     def show_anime(self) -> List[Anime]:
-        rooms = self.repo.get_anime()
-        return rooms
+        return self.repo.get_anime_list()
